@@ -10,6 +10,8 @@ to customize their profile and the format of their links to change the way it lo
 This website is being hosted using GCP App Engine. It uses a Google Cloud PostgreSQL database and a bucket for
 static and media files.
 
+Note: Webflow.com was partially used for the front end, hence the majority of the code is being registered as CSS.
+
 ## Installation
 
 ### Prerequisites

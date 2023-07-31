@@ -1,0 +1,137 @@
+{% extends 'linktastic/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% block extra_style %}
+<style>
+    body {
+        text-align: center;
+    }
+
+    .field-title {
+        font-size: 2em;
+    }
+
+    .field-description {
+        font-size: 1.2em;
+    }
+
+    .input-large {
+        height: 50px;
+        width: 70%;
+        margin: auto;
+        font-size: 1.2em;
+    }
+
+    .input-small {
+        height: 30px;
+        width: 70%;
+        margin: auto;
+        font-size: 1.2em;
+    }
+
+    #id_profile_picture {
+        display: none;
+    }
+
+    #profile_picture_label {
+        cursor: pointer;
+    }
+
+    #profile_picture_preview {
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn-submit {
+        background-color: #964b00;
+        color: #ffffff;
+        padding: 10px 20px;
+        font-size: 1.5em;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+    input[type="file"] {
+    display: none;  /* hide the default file input */
+    }
+
+    .custom-file-upload {
+        position: relative;
+        display: inline-block;
+        padding: 10px 16px;
+        background: #f4f4f4;
+        cursor: pointer;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+    }
+
+    .custom-file-upload:hover {
+        background: #e4e4e4;
+    }
+
+    .custom-file-upload label {
+        margin: 0;  /* remove default browser margins */
+    }
+
+</style>
+{% endblock extra_style %}
+<body style="background-color: #cdb8a5;">
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <br>
+    <div class="field-title">Display Name</div>
+    <br>
+    {{ form.display_name }}
+    <br>
+
+    <br>
+    <div class="field-title">Bio</div>
+    <br>
+    {{ form.bio }}
+
+    <br>
+    <br>
+    <div class="field-title">Profile Picture</div>
+    <br>
+    <div class="field-description">Pictures should be squared dimensions for best looks</div>
+    <br>
+    <div class="custom-file-upload">
+        <input type="file" name="{{ form.profile_picture.name }}" id="id_profile_picture" onchange="readURL(this);">
+        <label for="id_profile_picture">Choose a profile picture</label>
+    </div>
+
+    <img id="profile_picture_preview" src="{% if form.instance.profile_picture %}{{ form.instance.profile_picture.url }}{% else %}{% static 'linktastic/default-profile-picture.jpg' %}{% endif %}" onerror="this.src='{% static 'linktastic/default-profile-picture.jpg' %}';">
+
+    <button class="btn-submit" type="submit">Save Changes</button>
+</form>
+<br>
+<br>
+<br>
+<a href="{% url 'settings' %}" class="btn-submit">Return to Settings</a>
+
+
+{% block extra_script %}
+<script>
+    document.querySelector('#id_profile_picture').addEventListener('change', function(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.querySelector('#profile_picture_preview');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    });
+</script>
+{% endblock extra_script %}
+
+</body>
+{% endblock %}

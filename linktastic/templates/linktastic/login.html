@@ -1,0 +1,112 @@
+{% extends 'linktastic/base.html' %}
+
+{% load static %}
+{% load static widget_tweaks %}
+
+{% block content %}
+
+{% block extra_style %}
+<style>
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form-field {
+    width: 80%;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+.form-label {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+.submit-button {
+    width: 50%;
+    padding: 10px;
+    background-color: #A52A2A;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+.submit-button:hover {
+    background-color: #8B4513;
+}
+.register-button {
+    display: inline-block;
+    background-color: #f8f9fa;
+    color: #A52A2A;
+    text-align: center;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #A52A2A;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.register-button:hover {
+    color: white;
+    background-color: #A52A2A;
+}
+
+</style>
+{% endblock extra_style %}
+<body>
+    <div>
+        <section class="wf-section">
+            <section class="rl_section_contact1">
+                <div class="rl-padding-global">
+                    <div class="rl-container-small">
+                        <div class="rl-padding-section-large">
+                            <div class="rl_contact1_component">
+                                <div class="rl_contact1_heading-wrapper">
+                                    <div class="rl-text-style-subheading">Login</div>
+                                    <img src="{% static 'linktastic/images/Screenshot-2023-07-08-at-3.56.20-PM.png' %}" loading="lazy" width="493" sizes="(max-width: 767px) 90vw, 493px" alt="">
+                                    <div class="rl_contact1_spacing-block-1"></div>
+                                    <h2 class="rl-heading-style-h2">Welcome back!</h2>
+                                    <div class="rl_contact1_spacing-block-2"></div>
+                                </div>
+                                <div class="rl_contact1_spacing-block-3"></div>
+                                <div class="rl_contact1_form-block w-form">
+                                    <form method="post" class="form-container">
+                                        {% csrf_token %}
+                                        {% if form.non_field_errors %}
+                                            <div class="error-messages">
+                                                {% for error in form.non_field_errors %}
+                                                    <p>{{ error }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                        <label for="{{ form.username.id_for_label }}" class="form-label">{{ form.username.label }}</label>
+                                        {{ form.username|add_class:"form-field" }}
+                                        <div class="password-help-text">
+                                            {{ form.username.help_text|safe }}
+                                        </div>
+                                        <label for="{{ form.password.id_for_label }}" class="form-label">{{ form.password.label }}</label>
+                                        {{ form.password|add_class:"form-field" }}
+                                        <div class="password-help-text">
+                                            {{ form.password.help_text|safe }}
+                                        </div>
+                                        <button type="submit" class="submit-button">Login</button>
+                                    </form>
+                                    <div class="rl-success-message w-form-done">
+                                        <div class="rl-success-text">Thank you! Your submission has been received!</div>
+                                    </div>
+                                    <div class="rl-error-message w-form-fail">
+                                        <div class="rl-error-text">Oops! Something went wrong while submitting the form.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{% url 'register' %}" class="register-button">
+                        Don't have an account yet? Click here to register
+                    </a>
+                </div>
+            </section>
+        </section>
+    </div>
+</body>
+{% endblock %}

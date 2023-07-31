@@ -1,0 +1,128 @@
+{% extends 'linktastic/base.html' %}
+
+{% load static widget_tweaks %}
+
+{% block content %}
+
+{% block extra_style %}
+<style>
+.form-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.error-messages {
+    color: red;
+    margin-top: .25rem;
+}
+
+.submit-button {
+    color: #fff;
+    background-color: #6b4513;
+    border-color: #6b4513;
+    font-size: 1.5rem;
+    padding: .375rem .75rem;
+    border-radius: .25rem;
+    cursor: pointer;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.submit-button:hover {
+    color: #fff;
+    background-color: #40290d;
+    border-color: #40290d;
+}
+
+</style>
+{% endblock extra_style %}
+
+<body class="body-3">
+    <div>
+      <div data-animation="default" class="rl_navbar1_component w-nav" data-easing2="ease" fs-scrolldisable-element="smart-nav" data-easing="ease" data-collapse="medium" data-w-id="3eb4a9e9-71ad-564c-7ab3-631b5bca3a73" role="banner" data-duration="400">
+        <div class="rl_navbar1_container"><img src="{% static 'linktastic/images/Screenshot-2023-07-08-at-3.25.39-PM.png' %}" loading="lazy" width="191" sizes="(max-width: 479px) 41vw, (max-width: 767px) 38vw, 191px" alt="">
+          <a href="#" class="link-block w-inline-block">
+            <p><a href="{% url 'public-profile' user.username %}" target="_blank">View your public profile</a></p>
+          </a>
+          <div class="text-block-9">Logged in as user {{ user.username }}</div>
+        </div>
+      </div>
+      <section class="wf-section">
+        <div class="combine-pricing5_table-header">
+          <div class="combine-pricing5_details">
+            <a href="{% url 'url-shortener' %}" aria-current="page" class="combine-button-small w-button w--current">URL Shortener</a>
+          </div>
+          <div class="combine-pricing5_details">
+            <a href="{% url 'your-links' %}" class="combine-button-small w-button">Your Links</a>
+          </div>
+          <div class="combine-pricing5_details">
+            <a href="{% url 'settings' %}" class="combine-button-small w-button">Settings</a>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div>
+      <section class="rl_section_cta26">
+        <div class="rl-padding-global-3">
+          <div class="rl-container-small">
+            <div class="rl-padding-section-large">
+              <div class="rl_cta26_component">
+                <h2 class="rl-heading-style-h2-4">Create shortened URL&#x27;s</h2>
+                <div class="rl_cta26_spacing-block-1"></div>
+                <p class="rl-text-style-medium">Enter a url to receive a shortened version instantly</p>
+                <div class="rl_cta26_spacing-block-2"></div>
+                <div class="rl_cta26_form-block w-form">
+
+                  <form method="post" class="form-centered">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="{{ form.original_url.id_for_label }}" class="form-control-label">Original URL</label>
+                      {% render_field form.original_url class+="form-control" %}
+                      {% if form.original_url.errors %}
+                          {% for error in form.original_url.errors %}
+                              <div class="error-messages">{{ error }}</div>
+                          {% endfor %}
+                      {% endif %}
+                    </div>
+                    <button type="submit" class="submit-button">Shorten</button>
+                  </form>
+                  
+                  {% if short_url %}
+                    <p>Your shortened URL is: <a href="{{ short_url }}" target="_blank">{{ short_url }}</a></p>
+                  {% endif %}
+                  <div class="rl-success-message w-form-done">
+                    <div class="rl-success-text">Thank you! Your submission has been received!</div>
+                  </div>
+                  <div class="rl-error-message w-form-fail">
+                    <div class="rl-error-text">Oops! Something went wrong while submitting the form.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+
+{% endblock %}

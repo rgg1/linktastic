@@ -1,0 +1,108 @@
+{% extends 'linktastic/base.html' %}
+{% load static widget_tweaks %}
+
+{% block content %}
+
+{% block extra_style %}
+<style>
+.form-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.error-messages {
+    color: red;
+    margin-top: .25rem;
+}
+
+.submit-button {
+    color: #fff;
+    background-color: #6b4513;
+    border-color: #6b4513;
+    font-size: 1.5rem;
+    padding: .375rem .75rem;
+    border-radius: .25rem;
+    cursor: pointer;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.submit-button:hover {
+    color: #fff;
+    background-color: #40290d;
+    border-color: #40290d;
+}
+
+</style>
+{% endblock extra_style %}
+<body>
+  <section class="rl_section_contact1">
+    <div class="rl-padding-global">
+      <div class="rl-container-small">
+        <div class="rl-padding-section-large">
+          <div class="rl_contact1_component">
+            <div class="rl_contact1_heading-wrapper">
+              <div class="rl-text-style-subheading">Register</div>
+              <div class="rl_contact1_spacing-block-1"></div><img src="{% static 'linktastic/images/Screenshot-2023-07-08-at-3.56.20-PM.png' %}" loading="lazy" width="497" sizes="(max-width: 767px) 90vw, 497px" alt="">
+              <h2 class="rl-heading-style-h2-2">Welcome aboard!</h2>
+              <div class="rl_contact1_spacing-block-2"></div>
+            </div>
+            <div class="rl_contact1_spacing-block-3"></div>
+            <div class="rl_contact1_form-block w-form">
+              <form method="post" class="form-centered">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        {{ field.label_tag }} <br>
+                        {{ field|add_class:"form-control" }}
+                        {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="error-messages">
+                                {% for error in field.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <div class="form-group">
+                    <button type="submit" class="submit-button">Register</button>
+                </div>
+                <a href="{% url 'login' %}" class="submit-button">Return to Login</a>
+              </form>
+              <div class="rl-success-message w-form-done">
+                <div class="rl-success-text">Thank you! Your submission has been received!</div>
+              </div>
+              <div class="rl-error-message w-form-fail">
+                <div class="rl-error-text">Oops! Something went wrong while submitting the form.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+{% endblock %}

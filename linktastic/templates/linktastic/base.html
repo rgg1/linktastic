@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}LinkTastic{% endblock %}</title> 
+  <link href="{% static 'linktastic/normalize.css' %}" rel="stylesheet">
+  <link href="{% static 'linktastic/webflow.css' %}" rel="stylesheet">
+  <link href="{% static 'linktastic/rodrigos-ultra-awesome-site-8d58bf.webflow.css' %}" rel="stylesheet">
+  {% block extra_style %}{% endblock extra_style %}
+</head>
+<body style="background-color: #cdb8a5">
+  <main>
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </main>
+  {% block content %}
+  {% endblock %}
+  {% block extra_script %}{% endblock extra_script %}
+</body>
+</html>

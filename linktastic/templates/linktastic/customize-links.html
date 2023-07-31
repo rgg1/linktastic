@@ -1,0 +1,94 @@
+{% extends 'linktastic/base.html' %}
+
+{% load static %}
+
+{% block content %}
+{% block extra_style %}
+<style>
+    body {
+        background-color: #f8f8f8;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    h1 {
+        color: black;
+    }
+
+    label {
+        display: block;
+        text-align: center;
+        font-size: 1.2em;
+    }
+
+    select {
+        display: block;
+        width: 200px;
+        height: 40px;
+        margin: 10px auto;
+        font-size: 1.1em;
+        padding-left: 10px;
+    }
+
+    button {
+        background-color: #964b00;
+        color: #ffffff;
+        padding: 10px 20px;
+        font-size: 1.5em;
+        border-radius: 5px;
+        margin-top: 20px;
+        display: block;
+        margin: auto;
+    }
+
+    button:hover {
+        background-color: #253443;
+    }
+</style>
+{% endblock extra_style %}
+
+<body class="body-2">
+    <div class="container">
+        <h1>Customize Links</h1>
+        <form method="POST">
+          {% csrf_token %}
+
+          <label for="font_size">Font Size:</label>
+          <select name="font_size" id="font_size">
+            <option value="12px">Small</option>
+            <option value="16px">Medium</option>
+            <option value="20px">Large</option>
+          </select>
+
+          <label for="font_color">Font Color:</label>
+          <select name="font_color" id="font_color">
+            <option value="black">Black</option>
+            <option value="blue">Blue</option>
+            <option value="red">Red</option>
+          </select>
+
+          <label for="button_shape">Button Shape:</label>
+          <select name="button_shape" id="button_shape">
+              <option value="SQUARE" {% if form.instance.button_shape == 'SQUARE' %}selected{% endif %}>Square</option>
+              <option value="ROUNDED" {% if form.instance.button_shape == 'ROUNDED' %}selected{% endif %}>Rounded</option>
+          </select>
+
+          <label for="icon">Icon:</label>
+          <select name="icon" id="icon">
+              <option value="NONE" {% if form.instance.icon == 'NONE' %}selected{% endif %}>None</option>
+              <option value="STAR" {% if form.instance.icon == 'STAR' %}selected{% endif %}>Star</option>
+              <option value="HEART" {% if form.instance.icon == 'HEART' %}selected{% endif %}>Heart</option>
+          </select>
+
+          <button type="submit">Save Changes</button>
+        </form>
+    </div>
+</body>
+
+{% endblock %}

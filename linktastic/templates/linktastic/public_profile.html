@@ -1,0 +1,107 @@
+{% extends 'linktastic/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% block extra_style %}
+<style>
+.container {
+    text-align: center;
+}
+
+.profile-picture {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 0 auto;
+    background-size: cover;
+    background-position: center;
+    border: 6px solid black;
+}
+
+.display-name {
+    color: navy;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.bio {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    max-width: 350px; 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.link-item {
+    width: 70%;
+    margin-bottom: 15px;
+}
+</style>
+{% endblock extra_style %}
+
+<body style="background-color: #cdb8a5;">
+<div class="container">
+<h2 class="username">{{ username }}'s Links</h2>
+
+<div class="profile">
+
+    {% if user_profile.profile_picture %}
+        <div class="profile-picture" style="background-image: url('{{ user_profile.profile_picture.url }}')"></div>
+    {% else %}
+        <div class="profile-picture" style="background-image: url('{% static 'linktastic/default-profile.jpg' %}')"></div>
+    {% endif %}
+    
+    {% if user_profile.display_name %}
+        <h1 class="display-name">{{ user_profile.display_name }}</h1>
+    {% else %}
+        <h1 class="display-name">Display name not set</h1>
+    {% endif %}
+    
+    {% if user_profile.bio %}
+        <p class="bio">{{ user_profile.bio }}</p>
+    {% else %}
+        <p class="bio">No bio available</p>
+    {% endif %}
+</div>
+
+<div class="links">
+    {% for link in links %}
+    <div class="link-item" style="
+        font-size: {{ user_pref.font_size }};
+        color: {{ user_pref.font_color }};
+        border-radius: {% if user_pref.button_shape == 'ROUNDED' %}12px{% else %}0{% endif %};
+        background-color: #ebe3db;
+        padding: 10px;
+        ">
+        {% if user_pref.icon == 'STAR' %}
+            ★
+        {% elif user_pref.icon == 'HEART' %}
+            ♥
+        {% endif %}
+        <a href="{{ link.url }}" target="_blank" style="text-decoration: none; color: inherit;">
+            {{ link.title }}
+        </a>
+        {% if user_pref.icon == 'STAR' %}
+            ★
+        {% elif user_pref.icon == 'HEART' %}
+            ♥
+        {% endif %}
+    </div>
+    {% empty %}
+        <p>This user has not added any links yet.</p>
+    {% endfor %}
+</div>
+</div>
+</body>
+{% endblock %}

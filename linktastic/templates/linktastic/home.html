@@ -1,0 +1,22 @@
+{% extends 'linktastic/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div>
+  <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-logo-left-container-2 shadow-three w-nav">
+    <div class="container-2"></div>
+    <div class="navbar-wrapper-2"><img src="{% static 'linktastic/images/Screenshot-2023-07-08-at-3.25.39-PM.png' %}" loading="lazy" width="330" sizes="(max-width: 479px) 40vw, 330px" alt="" class="image-3">
+      <nav role="navigation" class="nav-menu-wrapper-2 w-nav-menu"></nav>
+      <div class="menu-button-2 w-nav-button"></div>
+      <a href="{% url 'login' %}" class="button-primary-2 w-button">Register / Login</a>
+    </div>
+  </div>
+  <section class="hero-heading-left wf-section">
+    <h1 class="heading">Custom links home page and URL shortener. All in one. Completely free.</h1>
+    <p class="margin-bottom-24px">Seamless design on both desktop and mobile devices</p><img src="{% static 'linktastic/images/linktastic_landing_3.png' %}" loading="lazy" width="800" sizes="(max-width: 767px) 94vw, 800px" alt="" class="image-4">
+  </section>
+</div>
+
+{% endblock %}

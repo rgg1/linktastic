@@ -1,0 +1,47 @@
+{% extends 'linktastic/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<body class="body-4">
+    <div>
+      <div data-animation="default" class="rl_navbar1_component w-nav" data-easing2="ease" fs-scrolldisable-element="smart-nav" data-easing="ease" data-collapse="medium" data-w-id="bc580cf9-31a4-53f9-1359-1103e4b0d7f9" role="banner" data-duration="400">
+        <div class="rl_navbar1_container"><img src="{% static 'linktastic/images/Screenshot-2023-07-08-at-3.25.39-PM.png' %}" loading="lazy" width="191" sizes="(max-width: 479px) 41vw, (max-width: 767px) 38vw, 191px" alt="">
+          <a href="#" class="link-block w-inline-block">
+            <p><a href="{% url 'public-profile' user.username %}" target="_blank">View your public profile</a></p>
+          </a>
+          <div class="text-block-9">Logged in as user {{ user.username }}</div>
+        </div>
+      </div>
+      <section class="wf-section">
+        <div class="combine-pricing5_table-header">
+          <div class="combine-pricing5_details">
+            <a href="{% url 'url-shortener' %}" class="combine-button-small w-button">URL Shortener</a>
+          </div>
+          <div class="combine-pricing5_details">
+            <a href="{% url 'your-links' %}" class="combine-button-small w-button">Your Links</a>
+          </div>
+          <div class="combine-pricing5_details">
+            <a href="{% url 'settings' %}" aria-current="page" class="combine-button-small w-button w--current">Settings</a>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div>
+      <div class="rl_contact7_spacing-block-1"></div>
+      <div class="rl_footer1_link-list">
+        <h2 class="rl-heading-style-h2-5">Settings</h2>
+        <div class="rl_footer1_spacing-block-4"></div>
+        <a href="{% url 'customize-links' %}" class="button-3-copy-4 w-button">Customize Link Formats</a>
+        <div class="rl_contact7_spacing-block-2"></div>
+        <a href="{% url 'edit-profile' %}" class="button-3 w-button">Customize public profile picture, display name, and bio</a>
+        <div class="rl_contact7_spacing-block-2"></div>
+        <a href="{% url 'change_password' %}" class="button-3-copy-6 w-button">Change password</a>
+        <div class="rl_contact7_spacing-block-2"></div>
+        <a href="{% url 'logout' %}" class="button-3-copy-5 w-button">Logout</a>
+      </div>
+    </div>
+</body>
+
+{% endblock %}

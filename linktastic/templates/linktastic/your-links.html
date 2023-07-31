@@ -1,0 +1,128 @@
+{% extends 'linktastic/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% block extra_style %}
+<style>
+  .link-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px 0;
+    background-color: white;
+    color: #cdb8a5;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .link-button:hover {
+    background-color: rgba(40, 54, 74, .9);
+  }
+  /* above is for links themselves */
+  /* below is for add link button and form */
+  .form-style p {
+    width: 100%;
+    margin: 10px auto;
+}
+
+.form-style label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form-style input[type="text"], .form-style input[type="url"] {
+    width: 100%;  
+    padding: 10px;
+    display: block;  
+    border-radius: 3px;
+}
+
+  .submit-btn {
+      width: 30%;
+      padding: 15px;
+      margin: 10px auto;
+      display: block;
+      background-color: white;
+      color: #cdb8a5;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+  }
+
+  .submit-btn:hover {
+      background-color: rgba(40, 54, 74, .9);
+  }
+</style>
+{% endblock extra_style %}
+
+
+<body class="body-5">
+  <div>
+    <div data-animation="default" class="rl_navbar1_component w-nav" data-easing2="ease" fs-scrolldisable-element="smart-nav" data-easing="ease" data-collapse="medium" data-w-id="f80e77a9-431c-dce6-b23d-c630fde7085a" role="banner" data-duration="400">
+      <div class="rl_navbar1_container"><img src="{% static 'linktastic/images/Screenshot-2023-07-08-at-3.25.39-PM.png' %}" loading="lazy" width="191" sizes="(max-width: 479px) 41vw, (max-width: 767px) 38vw, 191px" alt="">
+        <a href="#" class="link-block w-inline-block">
+          <p><a href="{% url 'public-profile' user.username %}" target="_blank">View your public profile</a></p>
+        </a>
+        <div class="text-block-9">Logged in as user {{ user.username }}</div>
+      </div>
+    </div>
+    <section class="wf-section">
+      <div class="combine-pricing5_table-header">
+        <div class="combine-pricing5_details">
+          <a href="{% url 'url-shortener' %}" class="combine-button-small w-button">URL Shortener</a>
+        </div>
+        <div class="combine-pricing5_details">
+          <a href="{% url 'your-links' %}" aria-current="page" class="combine-button-small w-button w--current">Your Links</a>
+        </div>
+        <div class="combine-pricing5_details">
+          <a href="{% url 'settings' %}" class="combine-button-small w-button">Settings</a>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div>
+    <section class="rl_section_contact7">
+      <div class="rl-padding-global-2">
+        <div class="rl-container-large-2">
+          <div class="rl-padding-section-large">
+            <div class="w-layout-grid rl_contact7_component">
+              <div class="rl_contact7_content">
+                <div class="rl_contact7_spacing-block-1"></div>
+                <h2 class="rl-heading-style-h2-5">Add Link</h2>
+                <div class="rl_contact7_spacing-block-2"></div>
+                <form method="POST" class="form-style">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <button type="submit" class="submit-btn">Add Link</button>
+                </form>                
+              </div>
+              <div id="w-node-_6b1c5322-5b6f-6ceb-f903-8f0e54439f88-5d6706ed">
+                {% for link in links %}
+                    <div class="link-item">
+                        <a class="link-button" href="{{ link.url }}" target="_blank">{{ link.title }}</a>
+                        <a href="{% url 'delete-link' link.id %}" onclick="confirmDelete(event)">🗑️</a>
+                    </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  {% block extra_script %}
+  <script>
+    function confirmDelete(event) {
+      if (!confirm("Do you want to delete this link from your page?")) {
+        event.preventDefault();
+      }
+    }
+  </script>
+  {% endblock extra_script %}
+</body>
+
+{% endblock %}
